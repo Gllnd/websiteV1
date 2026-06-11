@@ -1,3 +1,7 @@
 name = "websitev1"
 main = "worker.js"
 compatibility_date = "2026-06-11"
+
+[[r2_buckets]]
+binding = "IMAGES"
+bucket_name = "website"
