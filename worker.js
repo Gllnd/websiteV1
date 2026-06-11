@@ -2,6 +2,31 @@ import { pages } from "./content.js";
 import { gastenboekEntries } from "./gastenboek-data.js";
 
 const SITE_NAAM = "Huize Oude Willem";
+const SITE_BESCHRIJVING =
+  "Genieten van rust, stilte en weids uitzicht op de mooie natuur, daarvoor bent u bij Huize Oude Willem in Appelscha aan het juiste adres.";
+
+// Structured data voor zoekmachines (vakantiehuis-gegevens)
+const JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "LodgingBusiness",
+  name: SITE_NAAM,
+  description: SITE_BESCHRIJVING,
+  telephone: "+31613099504",
+  email: "info@huizeoudewillem.nl",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Oude Willem 10",
+    postalCode: "8426 SM",
+    addressLocality: "Appelscha",
+    addressCountry: "NL",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 52.922692,
+    longitude: 6.353892,
+  },
+  sameAs: ["https://www.facebook.com/HuizeOudeWillem"],
+};
 
 const MENU = [
   { titel: "Home", href: "/" },
@@ -179,17 +204,31 @@ function menuHtml(huidigPad) {
   return `<ul>${items.join("")}</ul>`;
 }
 
-function layout({ pad, title, metaDescription, featured, body }) {
+function layout({ pad, title, metaDescription, featured, body, origin }) {
   const featuredHtml = featured
     ? `<div class="featured-image" style="background-image:url('/images/${featured}')"></div>`
     : "";
+  const canonical = origin ? `${origin}${pad}` : "";
+  const ogImage = featured && origin ? `${origin}/images/${featured}` : "";
+  const beschrijving = metaDescription || SITE_BESCHRIJVING;
   return `<!DOCTYPE html>
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${title} - ${SITE_NAAM}</title>
-${metaDescription ? `<meta name="description" content="${metaDescription}">` : ""}
+<meta name="description" content="${beschrijving}">
+${canonical ? `<link rel="canonical" href="${canonical}">` : ""}
+<meta property="og:locale" content="nl_NL">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="${SITE_NAAM}">
+<meta property="og:title" content="${title} - ${SITE_NAAM}">
+<meta property="og:description" content="${beschrijving}">
+${canonical ? `<meta property="og:url" content="${canonical}">` : ""}
+${ogImage ? `<meta property="og:image" content="${ogImage}">` : ""}
+<meta name="twitter:card" content="${ogImage ? "summary_large_image" : "summary"}">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+${pad === "/" ? `<script type="application/ld+json">${JSON.stringify(JSON_LD)}</script>` : ""}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
@@ -267,6 +306,19 @@ function htmlResponse(html, status = 200) {
   });
 }
 
+const FAVICON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="4" fill="#222"/><path d="M16 6 L27 15 H24 V25 H19 V19 H13 V25 H8 V15 H5 Z" fill="#fff"/></svg>`;
+
+function sitemapXml(origin) {
+  const urls = Object.keys(pages)
+    .concat(["/gastenboek/"])
+    .map((pad) => `<url><loc>${origin}${pad}</loc></url>`)
+    .join("\n");
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls}
+</urlset>`;
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -277,6 +329,24 @@ export default {
       return serveImage(env, decodeURIComponent(pad.slice("/images/".length)));
     }
 
+    if (pad === "/favicon.svg" || pad === "/favicon.ico") {
+      return new Response(FAVICON_SVG, {
+        headers: { "content-type": "image/svg+xml", "cache-control": "public, max-age=604800" },
+      });
+    }
+
+    if (pad === "/robots.txt") {
+      return new Response(`User-agent: *\nAllow: /\n\nSitemap: ${url.origin}/sitemap.xml\n`, {
+        headers: { "content-type": "text/plain" },
+      });
+    }
+
+    if (pad === "/sitemap.xml") {
+      return new Response(sitemapXml(url.origin), {
+        headers: { "content-type": "application/xml" },
+      });
+    }
+
     // Paden normaliseren: altijd met slash op het eind
     if (!pad.endsWith("/")) {
       return Response.redirect(url.origin + pad + "/", 301);
@@ -285,7 +355,15 @@ export default {
     // Gastenboek wordt apart opgebouwd uit de berichten-data
     if (pad === "/gastenboek/") {
       return htmlResponse(
-        layout({ pad, title: "Gastenboek", featured: null, body: gastenboekBody() })
+        layout({
+          pad,
+          title: "Gastenboek",
+          metaDescription:
+            "Lees wat eerdere gasten schreven over hun verblijf in vakantiehuis Huize Oude Willem in Appelscha.",
+          featured: null,
+          body: gastenboekBody(),
+          origin: url.origin,
+        })
       );
     }
 
@@ -298,6 +376,7 @@ export default {
           metaDescription: page.metaDescription,
           featured: page.featured,
           body: page.body,
+          origin: url.origin,
         })
       );
     }
@@ -308,6 +387,7 @@ export default {
         title: "Pagina niet gevonden",
         featured: null,
         body: `<p>Deze pagina bestaat niet (meer). Ga terug naar de <a href="/">homepagina</a>.</p>`,
+        origin: url.origin,
       }),
       404
     );

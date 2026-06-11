@@ -88,7 +88,7 @@ export const pages = {
 <p>Huize Oude Willem is als vakantiehuis (4 - 14 personen) te huur voor een midweek, weekend of week. Het is ook mogelijk om het huis te huren voor trainingen, vergaderingen of (meerdaagse) heisessies.</p>
 <p>We verwelkomen u graag!</p>
 <p>Gelland (v) en Michel</p>
-<p><img class="alignleft" src="/images/uploads/2015/10/Trekkerfoto-website.jpg" alt="Trekkerfoto Huize Oude Willem" width="311"></p>
+<p><img class="alignleft" src="/images/uploads/2015/10/Trekkerfoto-website.jpg" alt="Trekkerfoto Huize Oude Willem" width="311" height="207" loading="lazy"></p>
 <div class="quotes-blok">
   <h2>Uit ons gastenboek</h2>
   <ul>
@@ -100,6 +100,8 @@ export const pages = {
 
   "/vakantiehuis/": {
     title: "Beschrijving",
+    metaDescription:
+      "Groot comfortabel vakantiehuis (275 m2, tot 14 personen) met 6 slaapkamers en 2 badkamers, aan de rand van Nationaal Park het Drents-Friese Wold bij Appelscha.",
     featured: "uploads/2013/06/DSC_0696.jpg",
     body: `
 <p>Groot comfortabel vakantiehuis (helft van boerderij, +/- 275 m2) aan de rand van nationaal park het Drents-Friese Wold. De boerderij is van net na de tweede wereldoorlog. Het voorhuis is in de afgelopen 10 jaar verbouwd en geschikt gemaakt als vakantiehuis tot 14 personen. Huize Oude Willem ligt in het Friese Oude Willem aan de rand van Appelscha. De boerderij is gelegen aan een stil weggetje (fietspad) met weinig autoverkeer, je loopt of fietst zo het bos (Drents Friese Wold) in.</p>
@@ -209,18 +211,24 @@ export const pages = {
 
   "/vakantiehuis/fotos-binnen/": {
     title: "Foto's binnen",
+    metaDescription:
+      "Bekijk foto's van het interieur van vakantiehuis Huize Oude Willem: de grote leefkeuken, woonkamer, slaapkamers en badkamers.",
     featured: "uploads/2015/02/AnEv2014aug16-2209-LR1.jpg",
     body: galleryHtml(galleries.binnen),
   },
 
   "/vakantiehuis/fotos-buiten/": {
     title: "Foto's buiten",
+    metaDescription:
+      "Bekijk foto's van de tuin, terrassen en omgeving van vakantiehuis Huize Oude Willem in Appelscha.",
     featured: "uploads/2013/06/DSC_0710.jpg",
     body: galleryHtml(galleries.buiten),
   },
 
   "/vakantiehuis/dieren/": {
     title: "Dieren",
+    metaDescription:
+      "Op het erf van Huize Oude Willem wonen Shetlanders, katten en honden. Paardencoaching is mogelijk en huisdieren zijn in overleg welkom.",
     featured: "uploads/2015/07/DSC_08121.jpg",
     body: `
 <h3>Op het erf van Huize Oude Willem wonen ook dieren:</h3>
@@ -234,6 +242,8 @@ ${galleryHtml(galleries.dieren)}`,
 
   "/vakantiehuis/tarieven/": {
     title: "Tarieven",
+    metaDescription:
+      "Tarieven van vakantiehuis Huize Oude Willem voor een weekend, midweek of week. Inclusief overzicht van wat wel en niet bij de huurprijs zit.",
     featured: "uploads/2015/02/DSC_0808.jpg",
     body: `
 <p><strong>Neemt u <a href="/contact/">contact</a> met ons op voor het tarief.</strong></p>
@@ -289,6 +299,8 @@ ${galleryHtml(galleries.dieren)}`,
 
   "/vakantiehuis/voorwaarden/": {
     title: "Voorwaarden & huisregels",
+    metaDescription:
+      "Voorwaarden en huisregels van Huize Oude Willem: reservering, betaling, huisdieren, waarborgsom, annulering en schoonmaak.",
     featured: "uploads/2015/07/DSC_0065-e1437338063836.jpg",
     body: `
 <h2>Reservering en betaling</h2>
@@ -342,6 +354,8 @@ ${galleryHtml(galleries.dieren)}`,
 
   "/vergaderen/": {
     title: "Vergaderen",
+    metaDescription:
+      "Huur Huize Oude Willem voor een training, vergadering of heisessie. Lichte groepsruimte van 50 m2 midden in de natuur, catering op verzoek.",
     featured: "uploads/2015/07/Oude-Willem-Vibrant1.jpg",
     body: `
 <p>Het is in overleg mogelijk om Huize Oude Willem te huren voor een (meerdaagse) training, vergadering of (meerdaagse) heisessie.</p>
@@ -354,6 +368,8 @@ ${galleryHtml(galleries.dieren)}`,
 
   "/omgeving/": {
     title: "Omgeving en activiteiten",
+    metaDescription:
+      "Huize Oude Willem ligt in Nationaal Park Drents-Friese Wold: 6000 hectare bos, heide en stuifzand voor wandelaars, fietsers, mountainbikers en ruiters.",
     featured: "uploads/2013/09/Kale-Duinen-Appelscha.jpg",
     body: `
 <p>Oude Willem ligt in het Nationaal Park Drents-Friese Wold, tussen Appelscha en Diever. Het Nationaal Park Drents-Friese Wold bestaat uit 6000 hectare bos, heide, stuifzand en beekdalgraslanden en biedt vele mogelijkheden voor wandelaars, fietsers, mountainbikers en ruiters. In de omgeving van Oude Willem liggen de authentieke dorpjes Diever, Vledder (museums Vledder), Dwingelo (Nationaal Park Dwingelderveld), Oldeberkoop (met haar beschermde dorpsgezicht), Fochteloo (natuurgebied Fochtelo&euml;rveen), Veenhuizen (gevangenismuseum), Westerbork, Norg, Orvelte (museumdorp), Havelte etc. en deze zijn de moeite waard om te bezoeken. Naast Nationaal Park Drents-Friese Wold liggen nog vijf Nationale Parken binnen een straal van 30 autominuten t.o.v. Huize Oude Willem. Zo zijn Nationaal Park Drents Friese Woud, Nationaal Park de Alde Feanen, Nationaal Park Dwingelderveld, Nationaal Beek en Esdorpen landschap Drentse Aa en Nationaal Park de Weerribben-Wieden ook echte aanraders qua natuur.</p>
@@ -365,6 +381,8 @@ ${galleryHtml(galleries.omgeving)}`,
 
   "/omgeving/activiteiten/": {
     title: "Tips en activiteiten",
+    metaDescription:
+      "Tips voor activiteiten rondom Huize Oude Willem: van de Boscamping Appelscha en Herberg het Volle Leven tot musea, attractieparken en natuurgebieden.",
     featured: "uploads/2013/09/Wandelen-Appelscha.jpg",
     body: `
 <p>Rondom Huize Oude Willem is genoeg te doen. Op ongeveer 1,5 km lopen zit de <strong><a href="http://www.boscampingappelscha.nl" target="_blank" rel="noopener noreferrer">Boscamping Appelscha</a></strong> (Oude Willem 3). Je kunt hier terecht voor een ijsje, een hapje en een drankje. Er is een grote speeltuin en je kunt er fietsen en mountainbikes huren of bijvoorbeeld een MTB GPS tocht of step-arrangement boeken.</p>
@@ -393,6 +411,8 @@ ${galleryHtml(galleries.omgeving)}`,
 
   "/praktische-tips/": {
     title: "Praktische tips",
+    metaDescription:
+      "Praktische informatie voor uw verblijf bij Huize Oude Willem: huisarts, apotheek, dierenarts, supermarkten en winkels in en rond Appelscha.",
     featured: null,
     body: `
 <p><strong>Medische hulp:</strong></p>
@@ -429,6 +449,8 @@ ${galleryHtml(galleries.omgeving)}`,
 
   "/contact/": {
     title: "Contact",
+    metaDescription:
+      "Neem contact op met Huize Oude Willem in Appelscha voor informatie of een reservering: telefonisch, per e-mail of via Facebook.",
     featured: "uploads/2015/02/DSC_0808.jpg",
     body: `
 <p>Heeft u vragen en wilt u meer informatie? Dan kunt u contact met ons opnemen per telefoon of e-mail via onderstaande contactgegevens. We staan u graag te woord.<br>
