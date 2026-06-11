@@ -463,9 +463,12 @@ Oude Willem 10<br>
 &#9993; <a href="mailto:info@huizeoudewillem.nl">info@huizeoudewillem.nl</a></p>
 <p><a href="https://www.facebook.com/HuizeOudeWillem" target="_blank" rel="noopener noreferrer"><img src="/images/uploads/2013/06/unnamed.png" alt="Facebook Huize Oude Willem" width="75" height="75" style="border-radius:8px"></a><br>
 Huize Oude Willem heeft een eigen Facebookpagina. Wilt u op de hoogte blijven? <a href="https://www.facebook.com/HuizeOudeWillem" target="_blank" rel="noopener noreferrer">Like dan hier onze Facebookpagina</a>.</p>
-<div class="kaart">
-<iframe title="Kaart Huize Oude Willem" src="https://www.openstreetmap.org/export/embed.html?bbox=6.3389%2C52.9152%2C6.3689%2C52.9302&amp;layer=mapnik&amp;marker=52.922692%2C6.353892" loading="lazy"></iframe>
-<p><a href="https://www.openstreetmap.org/?mlat=52.922692&amp;mlon=6.353892#map=15/52.9227/6.3539" target="_blank" rel="noopener noreferrer">Bekijk grotere kaart</a></p>
+<div class="kaart" id="osm-kaart" data-src="https://www.openstreetmap.org/export/embed.html?bbox=6.3389%2C52.9152%2C6.3689%2C52.9302&amp;layer=mapnik&amp;marker=52.922692%2C6.353892">
+<div class="kaart-placeholder">
+<p>De kaart komt van OpenStreetMap (externe partij) en wordt pas geladen na uw toestemming.</p>
+<button type="button" class="knop" data-kaart-laden>Kaart tonen</button>
+</div>
+<p><a href="https://www.openstreetmap.org/?mlat=52.922692&amp;mlon=6.353892#map=15/52.9227/6.3539" target="_blank" rel="noopener noreferrer">Bekijk grotere kaart op OpenStreetMap</a></p>
 </div>`,
   },
 };

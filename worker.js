@@ -168,6 +168,52 @@ ul.vinkjes li::before { content: "\\2713"; position: absolute; left: 0; color: #
 
 /* Kaart */
 .kaart iframe { width: 100%; height: 400px; border: 0; }
+.kaart-placeholder {
+  background: #f4f6f8;
+  border: 1px dashed #c5ccd3;
+  padding: 2.5em 1.5em;
+  text-align: center;
+}
+.kaart-placeholder p { margin-top: 0; }
+
+/* Knoppen */
+.knop {
+  font-family: inherit;
+  font-size: 0.82em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.8em 1.6em;
+  border: 0;
+  cursor: pointer;
+  background: var(--donker);
+  color: var(--wit);
+}
+.knop:hover { opacity: 0.85; }
+.knop.knop-licht { background: #e2e6ea; color: var(--tekst); }
+
+/* Cookie-banner */
+.cookie-banner {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  background: var(--wit);
+  color: var(--tekst);
+  box-shadow: 0 -4px 18px rgba(0,0,0,0.35);
+  padding: 1em 5.55%;
+}
+.cookie-banner .inhoud {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8em 1.5em;
+}
+.cookie-banner p { margin: 0; flex: 1 1 320px; font-size: 0.9em; }
+.cookie-banner .keuzes { display: flex; gap: 0.6em; }
 
 /* Footer */
 .site-footer { padding: 2.5em 5.55%; text-align: center; color: rgba(255,255,255,0.65); }
@@ -254,10 +300,67 @@ ${pad === "/" ? `<script type="application/ld+json">${JSON.stringify(JSON_LD)}</
   <div class="site-title"><a href="/">${SITE_NAAM}</a></div>
   <div class="sociaal">
     <a href="https://www.facebook.com/HuizeOudeWillem" target="_blank" rel="noopener noreferrer">Facebook</a> &middot;
-    <a href="mailto:info@huizeoudewillem.nl">E-mail</a>
+    <a href="mailto:info@huizeoudewillem.nl">E-mail</a> &middot;
+    <a href="#" data-cookie-reset>Cookievoorkeuren</a>
   </div>
   <p>Copyright &copy; ${SITE_NAAM}</p>
 </footer>
+<div class="cookie-banner" id="cookie-banner" hidden>
+  <div class="inhoud">
+    <p>Deze website gebruikt geen tracking-cookies. Alleen de kaart op de contactpagina komt van een externe partij (OpenStreetMap). Gaat u daarmee akkoord?</p>
+    <div class="keuzes">
+      <button type="button" class="knop" data-cookie-keuze="ja">Akkoord</button>
+      <button type="button" class="knop knop-licht" data-cookie-keuze="nee">Liever niet</button>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  var banner = document.getElementById("cookie-banner");
+
+  function laadKaart() {
+    var kaart = document.getElementById("osm-kaart");
+    if (!kaart || kaart.querySelector("iframe")) return;
+    var frame = document.createElement("iframe");
+    frame.title = "Kaart ${SITE_NAAM}";
+    frame.loading = "lazy";
+    frame.src = kaart.getAttribute("data-src");
+    kaart.insertBefore(frame, kaart.firstChild);
+    var ph = kaart.querySelector(".kaart-placeholder");
+    if (ph) ph.remove();
+  }
+
+  function kies(waarde) {
+    try { localStorage.setItem("cookie-keuze", waarde); } catch (e) {}
+    if (banner) banner.hidden = true;
+    if (waarde === "ja") laadKaart();
+  }
+
+  var keuze = null;
+  try { keuze = localStorage.getItem("cookie-keuze"); } catch (e) {}
+
+  if (keuze === "ja") laadKaart();
+  else if (!keuze && banner) banner.hidden = false;
+
+  document.querySelectorAll("[data-cookie-keuze]").forEach(function (knop) {
+    knop.addEventListener("click", function () { kies(knop.getAttribute("data-cookie-keuze")); });
+  });
+
+  // Kaart tonen op verzoek geldt als toestemming voor de kaart
+  document.querySelectorAll("[data-kaart-laden]").forEach(function (knop) {
+    knop.addEventListener("click", function () { kies("ja"); });
+  });
+
+  // Voorkeuren opnieuw instellen via de footer
+  document.querySelectorAll("[data-cookie-reset]").forEach(function (link) {
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+      try { localStorage.removeItem("cookie-keuze"); } catch (err) {}
+      if (banner) banner.hidden = false;
+    });
+  });
+})();
+</script>
 </body>
 </html>`;
 }
