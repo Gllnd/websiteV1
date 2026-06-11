@@ -1,5 +1,7 @@
-node_modules/
+﻿node_modules/
 .wrangler/
 _source/
 _images/
+_images_opt/
 _clone_source.html
+

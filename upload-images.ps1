@@ -1,10 +1,14 @@
-# Upload alle afbeeldingen uit _images\ naar de R2 bucket "website".
+# Upload alle afbeeldingen naar de R2 bucket "website".
+# Gebruikt _images_opt\ (geoptimaliseerd, max 1600px) als die bestaat, anders _images\.
 # Vereist eenmalig: npx wrangler login  (of $env:CLOUDFLARE_API_TOKEN)
 # Gebruik:  .\upload-images.ps1
 
-$bron = Join-Path $PSScriptRoot "_images"
+$bron = Join-Path $PSScriptRoot "_images_opt"
 if (-not (Test-Path $bron)) {
-    Write-Error "Map _images niet gevonden. Draai eerst de download-stap."
+    $bron = Join-Path $PSScriptRoot "_images"
+}
+if (-not (Test-Path $bron)) {
+    Write-Error "Map _images_opt of _images niet gevonden. Draai eerst de download-stap."
     exit 1
 }
 
